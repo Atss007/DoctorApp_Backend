@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Email Verification</h1>
+    <p>Please verify your email address by clicking the button below:</p>
+    <!-- <button onclick="window.location.href='<%= verificationLink %>'">Verify Email</button> -->
+    <button onclick="verifyEmail()">Verify Email</button>
+
+    <p>If you did not request this email, please ignore it.</p>
+
+    <script>
+
+
+        function verifyEmail() {
+            console.log("button clicked")
+            const verificationLink = "<%= verificationLink %>";
+            console.log("ver link: ", verificationLink);
+            fetch(verificationLink, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) {
+                        // Redirect to a success page or home page if needed
+                        window.location.href = '/';
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred: ' + error.message);
+                });
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+<!-- document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        document.body.classList.add('loaded');
+        document.getElementById('container').classList.add('loaded');
+    }, 500);
+}); -->
